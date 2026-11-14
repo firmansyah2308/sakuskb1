@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAKU — Sistem Aplikasi Keuangan</title>
+  <title>Kelompok SKB 1 — Sistem Keuangan & Kas</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -117,11 +117,11 @@
       </div>
 
       <div class="space-y-2">
-        <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">SAKU SKB 1</h2>
+        <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Kelompok SKB 1</h2>
         <div class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-bold bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200/60 uppercase tracking-wider">
-          Sistem Aplikasi Keuangan
+          Sistem Keuangan & Kas
         </div>
-        <p class="text-xs text-slate-500 dark:text-slate-400 pt-1 leading-relaxed">Selamat datang di SAKU (Sistem Aplikasi Keuangan) terpadu kelompok. Masukkan Username & Password Anda untuk mengakses</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 pt-1 leading-relaxed">Selamat datang di aplikasi keuangan terpadu kelompok. Masukkan Username & Password Anda untuk mengakses</p>
       </div>
 
       <form onsubmit="handleFrontLogin(event)" class="space-y-4 text-left">
@@ -178,11 +178,11 @@
           <div class="min-w-0">
             <div class="flex items-center gap-2">
               <h1 class="font-black text-base sm:text-lg lg:text-xl leading-tight text-slate-900 dark:text-white truncate tracking-tight">
-                SAKU SKB1
+                Kelompok Srengseng Kalibata 1
               </h1>
             </div>
             <p class="text-xs text-slate-500 dark:text-slate-400 font-medium truncate flex items-center gap-1.5 pt-0.5">
-              Sistem Aplikasi Keuangan Terpadu Kelompok
+              Sistem Pencatatan Transaksi Keuangan
             </p>
           </div>
         </div>
@@ -263,6 +263,14 @@
           <i id="navInfoLockIcon" class="fa-solid fa-lock text-xs text-slate-400"></i>
         </button>
 
+        <button id="navIbu2Btn" onclick="trySwitchTab('ibu2')" class="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl font-bold text-sm transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+          <div class="flex items-center space-x-3 truncate">
+            <i class="fa-solid fa-hand-holding-heart text-base text-pink-500"></i>
+            <span class="sidebar-text truncate">Keuangan Ibu-Ibu</span>
+          </div>
+          <i id="navIbu2LockIcon" class="fa-solid fa-lock text-xs text-slate-400"></i>
+        </button>
+
         <div class="pt-6 mt-2 border-t border-slate-100 dark:border-slate-800">
           <div class="px-2 py-1 text-[11px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2">
             PENGATURAN
@@ -288,8 +296,8 @@
       </div>
 
       <div class="p-5 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-slate-900/30">
-        <p class="font-bold text-slate-700 dark:text-slate-300">SAKU SKB1 v7.2</p>
-        <p class="text-[10px] text-slate-400 pt-0.5">Sistem Aplikasi Keuangan</p>
+        <p class="font-bold text-slate-700 dark:text-slate-300">KasKita SKB 1 v3.5</p>
+        <p class="text-[10px] text-slate-400 pt-0.5">Playful Fintech Theme</p>
       </div>
 
     </aside>
@@ -1097,6 +1105,335 @@
 
       </section>
 
+      <!-- SECTION 6: KEUANGAN IBU-IBU (DATABASE TERPISAH) -->
+      <section id="ibu2TabSection" class="hidden space-y-6">
+
+        <!-- Banner Header Khusus Ibu-Ibu -->
+        <div class="bg-pink-50 dark:bg-slate-800 rounded-[2rem] p-6 text-slate-800 dark:text-white shadow-soft border border-pink-200/70 dark:border-slate-700 relative overflow-hidden fix-card-bg">
+          <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="text-left space-y-1.5">
+              <span class="px-3 py-1 rounded-full text-[11px] font-black uppercase bg-pink-200/70 text-pink-900 dark:bg-pink-950 dark:text-pink-300 border border-pink-300/60">
+                🌸 SAKU IBU-IBU SKB 1 (Database Terpisah)
+              </span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Assalamu'alaikum Wr Wb 👋</h2>
+              <div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium pt-0.5">
+                Selamat datang, <strong id="ibu2RoleName" class="text-pink-700 dark:text-pink-300 font-extrabold underline">Petugas</strong>!
+                <span id="ibu2PermissionBadge" class="ml-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">
+                  Akses Penuh (Input & Monitoring)
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-Navigation Tabs Ibu-Ibu -->
+        <div class="flex flex-wrap items-center gap-2 bg-white dark:bg-[#1E293B] p-2 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-soft no-print">
+          <button type="button" id="ibu2SubTabSummaryBtn" onclick="switchIbu2SubTab('summary')" class="flex-1 sm:flex-none px-5 py-2.5 rounded-2xl text-xs font-extrabold transition-all bg-pink-500 text-white shadow-sm flex items-center justify-center gap-2">
+            <i class="fa-solid fa-chart-pie"></i> Ringkasan & Grafik
+          </button>
+          <button type="button" id="ibu2SubTabHistoryBtn" onclick="switchIbu2SubTab('history')" class="flex-1 sm:flex-none px-5 py-2.5 rounded-2xl text-xs font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-receipt"></i> Riwayat Buku Kas Ibu-Ibu
+          </button>
+          <button type="button" id="ibu2SubTabInputBtn" onclick="switchIbu2SubTab('input')" class="flex-1 sm:flex-none px-5 py-2.5 rounded-2xl text-xs font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center gap-2">
+            <i class="fa-solid fa-plus-circle"></i> Input Transaksi Ibu-Ibu
+          </button>
+        </div>
+
+        <!-- SUB-VIEW 1: RINGKASAN & GRAFIK IBU-IBU -->
+        <div id="ibu2SummaryView" class="space-y-6">
+          
+          <!-- Filter Panel Ringkasan Ibu-Ibu -->
+          <div class="bg-white dark:bg-[#1E293B] rounded-[2rem] p-5 sm:p-6 shadow-soft border border-slate-100 dark:border-slate-800 no-print space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h3 class="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-pink-500"></i> FILTER RINGKASAN KAS IBU-IBU
+              </h3>
+              <button type="button" onclick="resetIbu2Filters('summary')" class="text-xs text-pink-600 hover:text-pink-500 font-bold transition-colors">
+                <i class="fa-solid fa-arrow-rotate-left mr-1"></i> Reset Filter
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5 ml-1">Dari Tanggal</label>
+                <input type="date" id="ibu2SummaryStartDate" onchange="renderIbu2Dashboard()" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 text-xs font-semibold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5 ml-1">Sampai Tanggal</label>
+                <input type="date" id="ibu2SummaryEndDate" onchange="renderIbu2Dashboard()" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 text-xs font-semibold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5 ml-1">Jenis Arus Kas</label>
+                <select id="ibu2SummaryType" onchange="renderIbu2Dashboard()" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 text-xs font-bold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+                  <option value="ALL">Semua (Debet & Kredit)</option>
+                  <option value="debet">Pemasukan (Debet)</option>
+                  <option value="kredit">Pengeluaran (Kredit)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mr-1">Filter Cepat:</span>
+              <button type="button" data-month="latest" onclick="setIbu2MonthFilter('latest', 'summary')" class="ibu2-summary-month-btn px-4 py-1.5 text-xs font-extrabold rounded-full bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                <i class="fa-solid fa-sparkles text-[10px] mr-1"></i> Bulan Terakhir
+              </button>
+              <button type="button" data-month="all" onclick="setIbu2MonthFilter('all', 'summary')" class="ibu2-summary-month-btn px-4 py-1.5 text-xs font-extrabold rounded-full bg-pink-500 text-white transition-all shadow-sm">
+                Semua Periode
+              </button>
+            </div>
+          </div>
+
+          <!-- KPI Cards Ibu-Ibu -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="bg-pastel-mint dark:bg-slate-800 rounded-[2rem] p-6 text-slate-900 dark:text-white shadow-soft border border-emerald-200/80 dark:border-slate-700 space-y-3 fix-card-bg">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-300">Saldo Kas Ibu-Ibu (Periode)</span>
+                <div class="w-10 h-10 rounded-2xl bg-white dark:bg-slate-700 text-emerald-600 flex items-center justify-center text-lg shadow-sm">
+                  <i class="fa-solid fa-wallet"></i>
+                </div>
+              </div>
+              <h3 id="ibu2BalanceKpi" class="text-2xl sm:text-3xl font-black font-mono tracking-tight">Rp 0</h3>
+              <p class="text-xs text-slate-600 dark:text-slate-300 font-medium">Sesuai filter periode yang dipilih</p>
+            </div>
+
+            <div class="bg-white dark:bg-[#1E293B] border border-emerald-100 dark:border-slate-800 rounded-[2rem] p-6 shadow-soft space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black uppercase tracking-wider text-slate-400">Total Pemasukan (Debet)</span>
+                <div class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 flex items-center justify-center text-lg">
+                  <i class="fa-solid fa-arrow-down-left"></i>
+                </div>
+              </div>
+              <h3 id="ibu2IncomeKpi" class="text-2xl sm:text-3xl font-black font-mono tracking-tight text-slate-900 dark:text-white">Rp 0</h3>
+              <p class="text-xs text-slate-500 font-medium"><span id="ibu2IncomeCount" class="font-bold text-emerald-600">0</span> transaksi pemasukan</p>
+            </div>
+
+            <div class="bg-white dark:bg-[#1E293B] border border-rose-100 dark:border-slate-800 rounded-[2rem] p-6 shadow-soft space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-black uppercase tracking-wider text-slate-400">Total Pengeluaran (Kredit)</span>
+                <div class="w-10 h-10 rounded-2xl bg-rose-50 dark:bg-rose-950 text-rose-500 flex items-center justify-center text-lg">
+                  <i class="fa-solid fa-arrow-up-right"></i>
+                </div>
+              </div>
+              <h3 id="ibu2ExpenseKpi" class="text-2xl sm:text-3xl font-black font-mono tracking-tight text-slate-900 dark:text-white">Rp 0</h3>
+              <p class="text-xs text-slate-500 font-medium"><span id="ibu2ExpenseCount" class="font-bold text-rose-500">0</span> transaksi pengeluaran</p>
+            </div>
+          </div>
+
+          <!-- Grafik Ibu-Ibu -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-white dark:bg-[#1E293B] rounded-[2rem] p-6 shadow-soft border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-black text-xs text-slate-800 dark:text-slate-100 flex items-center gap-2 uppercase tracking-wide">
+                  <i class="fa-solid fa-chart-pie text-pink-500"></i> Komposisi Pemasukan Ibu-Ibu
+                </h3>
+                <span class="text-[11px] bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 px-3 py-1 rounded-full font-extrabold">Debet</span>
+              </div>
+              <div class="relative flex-1 min-h-[250px] flex items-center justify-center">
+                <canvas id="ibu2IncomeChart"></canvas>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-[#1E293B] rounded-[2rem] p-6 shadow-soft border border-slate-100 dark:border-slate-800 flex flex-col justify-between">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-black text-xs text-slate-800 dark:text-slate-100 flex items-center gap-2 uppercase tracking-wide">
+                  <i class="fa-solid fa-chart-pie text-rose-500"></i> Komposisi Pengeluaran Ibu-Ibu
+                </h3>
+                <span class="text-[11px] bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300 px-3 py-1 rounded-full font-extrabold">Kredit</span>
+              </div>
+              <div class="relative flex-1 min-h-[250px] flex items-center justify-center">
+                <canvas id="ibu2ExpenseChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SUB-VIEW 2: RIWAYAT BUKU KAS IBU-IBU -->
+        <div id="ibu2HistoryView" class="hidden space-y-6">
+
+          <!-- Filter Panel Riwayat Ibu-Ibu -->
+          <div class="bg-white dark:bg-[#1E293B] rounded-[2rem] p-5 sm:p-6 shadow-soft border border-slate-100 dark:border-slate-800 no-print space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h3 class="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-sliders text-pink-500"></i> FILTER RIWAYAT BUKU KAS IBU-IBU
+              </h3>
+              <button type="button" onclick="resetIbu2Filters('history')" class="text-xs text-pink-600 hover:text-pink-500 font-bold transition-colors">
+                <i class="fa-solid fa-arrow-rotate-left mr-1"></i> Reset Filter
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5 ml-1">Dari Tanggal</label>
+                <input type="date" id="ibu2HistoryStartDate" onchange="renderIbu2Dashboard()" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 text-xs font-semibold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5 ml-1">Sampai Tanggal</label>
+                <input type="date" id="ibu2HistoryEndDate" onchange="renderIbu2Dashboard()" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 text-xs font-semibold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-600 dark:text-slate-300 mb-1.5 ml-1">Jenis Arus Kas</label>
+                <select id="ibu2HistoryType" onchange="renderIbu2Dashboard()" class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 text-xs font-bold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+                  <option value="ALL">Semua (Debet & Kredit)</option>
+                  <option value="debet">Pemasukan (Debet)</option>
+                  <option value="kredit">Pengeluaran (Kredit)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <span class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mr-1">Filter Cepat:</span>
+              <button type="button" data-month="latest" onclick="setIbu2MonthFilter('latest', 'history')" class="ibu2-history-month-btn px-4 py-1.5 text-xs font-extrabold rounded-full bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 transition-all">
+                <i class="fa-solid fa-sparkles text-[10px] mr-1"></i> Bulan Terakhir
+              </button>
+              <button type="button" data-month="all" onclick="setIbu2MonthFilter('all', 'history')" class="ibu2-history-month-btn px-4 py-1.5 text-xs font-extrabold rounded-full bg-pink-500 text-white transition-all shadow-sm">
+                Semua Periode
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white dark:bg-[#1E293B] rounded-[2rem] shadow-soft border border-slate-100 dark:border-slate-800 overflow-hidden">
+            <div class="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h3 class="font-black text-sm text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-wide">
+                  <i class="fa-solid fa-receipt text-pink-500"></i> Riwayat Transaksi Kas Ibu-Ibu
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Terhubung langsung ke Spreadsheet Keuangan Ibu-Ibu</p>
+              </div>
+              <div class="flex items-center gap-2.5">
+                <div class="relative flex-1 sm:w-64">
+                  <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                  <input type="text" id="ibu2TableSearch" onkeyup="renderIbu2Dashboard()" placeholder="Cari uraian / keterangan..." class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl pl-9 pr-3 py-2 text-xs font-semibold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+                </div>
+                <button type="button" onclick="exportIbu2ToCSV()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-2xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm">
+                  <i class="fa-solid fa-file-csv text-pink-500 text-sm"></i> CSV
+                </button>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto custom-scrollbar">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-slate-50 dark:bg-[#0F172A] text-slate-400 dark:text-slate-400 text-[11px] font-black uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
+                    <th class="py-4 px-4">TGL</th>
+                    <th class="py-4 px-4">URAIAN / DETAIL</th>
+                    <th class="py-4 px-4">KETERANGAN</th>
+                    <th class="py-4 px-4 text-right">DEBET (MASUK)</th>
+                    <th class="py-4 px-4 text-right">KREDIT (KELUAR)</th>
+                    <th class="py-4 px-4 text-right">SALDO</th>
+                    <th id="ibu2TableActionHeader" class="py-4 px-4 text-center">AKSI</th>
+                  </tr>
+                </thead>
+                <tbody id="ibu2TransactionTableBody" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUB-VIEW 3: INPUT TRANSAKSI IBU-IBU (KHUSUS TIM KEUANGAN) -->
+        <div id="ibu2InputView" class="hidden max-w-3xl mx-auto space-y-6">
+          <div class="bg-white dark:bg-[#1E293B] rounded-[2rem] p-6 sm:p-8 shadow-soft border border-slate-100 dark:border-slate-800 space-y-6">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <h3 class="text-base font-black text-slate-900 dark:text-white flex items-center gap-2 uppercase tracking-wide">
+                  <i class="fa-solid fa-plus-circle text-pink-500"></i> Input Transaksi Kas Ibu-Ibu
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  Petugas Input: <span id="ibu2PetugasBadge" class="font-extrabold text-pink-700 dark:text-pink-300 bg-pink-50 dark:bg-pink-950 px-2.5 py-0.5 rounded-full">Petugas</span>
+                </p>
+              </div>
+            </div>
+
+            <form id="ibu2TransactionForm" onsubmit="handleIbu2TransactionSubmit(event)" class="space-y-5">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5 ml-1">
+                    Tanggal Transaksi <span class="text-rose-500">*</span>
+                  </label>
+                  <input type="date" id="ibu2InputDate" required class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs font-bold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5 ml-1">
+                    Jenis Arus Kas <span class="text-rose-500">*</span>
+                  </label>
+                  <select id="ibu2InputType" required class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs font-extrabold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+                    <option value="debet" class="text-emerald-600 font-bold">Pemasukan (Debet)</option>
+                    <option value="kredit" class="text-rose-600 font-bold">Pengeluaran (Kredit)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5 ml-1">
+                  Nominal (Rp) <span class="text-rose-500">*</span>
+                </label>
+                <div class="relative">
+                  <span class="absolute left-4 top-1/2 -translate-y-1/2 font-extrabold text-slate-400 text-sm font-mono">Rp</span>
+                  <input type="number" id="ibu2InputAmount" min="1" step="1" placeholder="100000" required class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl pl-11 pr-4 py-3 text-sm font-black font-mono focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5 ml-1">
+                  Detail Uraian Transaksi <span class="text-rose-500">*</span>
+                </label>
+                <input type="text" id="ibu2InputDescription" placeholder="Contoh: Shodaqoh Pengajian Rutin Pekan 2" required class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs font-semibold focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-200 mb-1.5 ml-1">
+                  Keterangan Tambahan <span class="text-slate-400 text-[10px] font-normal">(Opsional)</span>
+                </label>
+                <textarea id="ibu2InputNotes" rows="2" placeholder="Catatan tambahan..." class="w-full bg-slate-50 dark:bg-[#0F172A] border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-xs focus:ring-2 focus:ring-pink-400 focus:outline-none dark:text-white transition-all"></textarea>
+              </div>
+
+              <div class="flex items-center space-x-3 pt-2">
+                <button type="submit" id="ibu2SubmitTxBtn" class="flex-1 bg-pink-600 hover:bg-pink-700 text-white font-extrabold py-4 px-6 rounded-2xl shadow-sm active:scale-[0.98] transition-all flex items-center justify-center space-x-2 text-xs">
+                  <i class="fa-solid fa-floppy-disk"></i>
+                  <span id="ibu2SubmitBtnText">Simpan Transaksi Ibu-Ibu</span>
+                </button>
+                <button type="button" onclick="resetIbu2Form()" class="px-5 py-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-200 rounded-2xl font-bold text-xs transition-all">
+                  Reset / Batal
+                </button>
+              </div>
+            </form>
+
+            <!-- Top 5 Transaksi Terakhir Ibu-Ibu -->
+            <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-black text-slate-800 dark:text-slate-200 flex items-center gap-2 uppercase tracking-wide">
+                  <i class="fa-solid fa-clock-rotate-left text-pink-500"></i> 5 TRANSAKSI TERAKHIR DIINPUT (IBU-IBU)
+                </h3>
+                <span class="text-[11px] text-slate-400 font-medium">Koreksi Cepat</span>
+              </div>
+
+              <div class="overflow-x-auto custom-scrollbar bg-slate-50 dark:bg-[#0F172A] rounded-2xl border border-slate-200 dark:border-slate-800">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-400 font-black uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+                      <th class="py-3 px-3.5">TGL</th>
+                      <th class="py-3 px-3.5">ARUS KAS</th>
+                      <th class="py-3 px-3.5">URAIAN</th>
+                      <th class="py-3 px-3.5 text-right">NOMINAL</th>
+                      <th class="py-3 px-3.5 text-center">AKSI</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentIbu2TxTableBody" class="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
     </main>
 
   </div>
@@ -1275,7 +1612,7 @@
   <!-- FOOTER -->
   <footer class="bg-white dark:bg-[#0F172A] border-t border-slate-100 dark:border-slate-800 py-4 mt-auto no-print">
     <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 dark:text-slate-500 font-medium">
-      <p>&copy; 2026 Srengseng Kalibata 1 - Sistem Aplikasi Keuangan (SAKU)</p>
+      <p>&copy; 2026 Srengseng Kalibata 1 - Sistem Keuangan</p>
     </div>
   </footer>
 
@@ -1284,7 +1621,18 @@
     // ENDPOINTS
     const USER_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxFWquCku8RTLpoQmgsfiHt6BTkN1zcXWEg5JWYaTbUSRcON8u1fP7bF5YhuD6ZtAmUsA/exec";
     const TRANSACTION_SHEETS_URL = "https://script.google.com/macros/s/AKfycbw8HI-xt8XDkmsjNd_Cr_rxe7Yd3Rt2ofGtV_jdYW3pwpfeAoTS6Z_SDftf7wiHaRrv/exec";
+    const IBU2_SHEETS_URL = "https://script.google.com/macros/s/AKfycbzJ3Wv4qsKCESCaBxVT1uZmI-GJslV-cpi4rlm8ik-Fj1fl7xuQcQJiYvTpijMLz8K7/exec";
 
+    // Kirim kredensial melalui POST body agar tidak terekspos di query URL.
+    async function callUserManagementApi(payload) {
+      const response = await fetch(USER_SHEETS_URL, {
+        method: 'POST', redirect: 'follow',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error('Server manajemen user tidak dapat dihubungi.');
+      return await response.json();
+    }
     // GLOBAL APPLICATION STATE & CONSTANTS
     const ALL_CATEGORIES = [
       "KH FR", "KH Shod Daerah", "KH Shod Desa", "KH Shod Kelompok", "KH Infaq",
@@ -1305,30 +1653,37 @@
     ];
 
     let transactions = [];
+    let transactionsIbu2 = [];
     let jamaahList = [];
     let informasiList = [];
 
     let currentAccountUser = "";
     let currentUserRole = "Petugas KU";
     let currentPetugas = "Arif F";
-    let currentPassword = "";
+    let currentSessionToken = "";
     let allowedTabs = ['summary', 'bukukas', 'input', 'rekap', 'info'];
+    let canInputIbu2 = false;
 
     let failedLoginAttempts = 0;
     const MAX_LOGIN_ATTEMPTS = 3;
 
     let isLoading = false;
     let activeTab = 'summary';
+    let activeIbu2SubTab = 'summary';
     let currentPage = 1;
     const ITEMS_PER_PAGE = 15;
 
     let editingTxId = null;
+    let editingIbu2TxId = null;
     let pendingDeleteId = null;
+    let pendingDeleteScope = 'main';
     let editingInfoId = null;
 
     let categoryIncomeChartInstance = null;
     let categoryExpenseChartInstance = null;
     let trendChartInstance = null;
+    let ibu2IncomeChartInstance = null;
+    let ibu2ExpenseChartInstance = null;
 
     function parseNumericAmount(val) {
       if (val === null || val === undefined) return 0;
@@ -1338,6 +1693,17 @@
       return isNaN(parsed) ? 0 : parsed;
     }
 
+    function normalizeTxType(rawType) {
+      const val = String(rawType || '').toLowerCase().trim();
+      if (val === 'pemasukan' || val === 'debet' || val === 'masuk' || val === 'in' || val === 'debit') {
+        return 'debet';
+      }
+      if (val === 'pengeluaran' || val === 'kredit' || val === 'keluar' || val === 'out' || val === 'credit') {
+        return 'kredit';
+      }
+      return 'debet';
+    }
+
     function formatRupiah(number) {
       const num = parseNumericAmount(number);
       return 'Rp ' + Math.abs(num).toLocaleString('id-ID');
@@ -1345,7 +1711,6 @@
 
     function parseISOtoDDMMYYYY(isoStr) {
       if (!isoStr) return '';
-      // Tangani string ISO bertipe ISO-8601 (misal 2026-11-07T00:00:00.000Z atau Date object)
       const str = String(isoStr).trim().split('T')[0];
       const parts = str.split('-');
       if (parts.length === 3) {
@@ -1425,22 +1790,31 @@
       }
     }
 
-    function parseAksesString(aksesStr, roleStr) {
-      const inputStr = String(aksesStr || '').trim().toLowerCase();
-      const role = String(roleStr || '').trim().toLowerCase();
-
-      if (!aksesStr || inputStr.includes('semua') || inputStr.includes('full') || inputStr.includes('admin') || role.includes('admin') || role.includes('petugas ku')) {
-        return ['summary', 'bukukas', 'input', 'rekap', 'info'];
-      }
-
+    function parseAksesString(aksesStr) {
+      const raw = String(aksesStr || '').trim().toLowerCase();
+      if (!raw) return [];
+      if (/(^|[,;])\s*(semua|full access|full)\s*(?=[,;]|$)/i.test(raw)) return ['summary','bukukas','input','rekap','info','ibu2'];
       const tabs = [];
-      if (inputStr.includes('ringkasan') || inputStr.includes('analisis') || inputStr.includes('summary')) tabs.push('summary');
-      if (inputStr.includes('rincian') || inputStr.includes('buku kas') || inputStr.includes('bukukas')) tabs.push('bukukas');
-      if (inputStr.includes('input')) tabs.push('input');
-      if (inputStr.includes('rekap')) tabs.push('rekap');
-      if (inputStr.includes('informasi') || inputStr.includes('info')) tabs.push('info');
+      raw.split(/[,;\n]+/).map(x => x.trim()).filter(Boolean).forEach(item => {
+        let tab = null;
+        if (/ringkasan|analisis|summary/.test(item)) tab = 'summary';
+        else if (/rincian|buku\s*kas|bukukas/.test(item)) tab = 'bukukas';
+        else if (/input/.test(item)) tab = 'input';
+        else if (/rekap/.test(item)) tab = 'rekap';
+        else if (/informasi|\binfo\b/.test(item)) tab = 'info';
+        else if (/keuangan\s*ibu|ibu-ibu|ibu\s*ibu/.test(item)) tab = 'ibu2';
+        if (tab && !tabs.includes(tab)) tabs.push(tab);
+      });
+      return tabs;
+    }
 
-      return tabs.length > 0 ? tabs : ['summary', 'bukukas', 'input', 'rekap', 'info'];
+    function canUserInputIbu2(roleStr, aksesStr) {
+      const role = String(roleStr || '').trim().toLowerCase();
+      const akses = String(aksesStr || '').trim().toLowerCase();
+      if (role.includes('pengawas') && !role.includes('keuangan') && !role.includes('petugas ku') && !role.includes('admin')) {
+        return false;
+      }
+      return role.includes('petugas ku') || role === 'ku' || role.includes('keuangan') || role.includes('bendahara') || role.includes('admin') || akses.includes('semua') || akses.includes('full');
     }
 
     function updateSidebarLockIcons() {
@@ -1449,7 +1823,8 @@
         bukukas: 'navBukuKasLockIcon',
         input: 'navInputLockIcon',
         rekap: 'navRekapLockIcon',
-        info: 'navInfoLockIcon'
+        info: 'navInfoLockIcon',
+        ibu2: 'navIbu2LockIcon'
       };
 
       const navBtnIds = {
@@ -1457,7 +1832,8 @@
         bukukas: 'navBukuKasBtn',
         input: 'navInputBtn',
         rekap: 'navRekapBtn',
-        info: 'navInfoBtn'
+        info: 'navInfoBtn',
+        ibu2: 'navIbu2Btn'
       };
 
       Object.keys(tabLockIds).forEach(tab => {
@@ -1522,32 +1898,31 @@
           try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 8000);
-            const loginApiUrl = `${USER_SHEETS_URL}?action=login&username=${encodeURIComponent(usernameInput)}&user=${encodeURIComponent(usernameInput)}&password=${encodeURIComponent(passwordInput)}`;
-
-            const res = await fetch(loginApiUrl, {
-              signal: controller.signal,
-              redirect: 'follow'
-            });
+            const resData = await Promise.race([
+              callUserManagementApi({ action: 'login', username: usernameInput, password: passwordInput, appName: 'KASKU' }),
+              new Promise((_, reject) => setTimeout(() => reject(new Error('Waktu verifikasi habis.')), 8000))
+            ]);
             clearTimeout(timeoutId);
-
-            if (res.ok) {
-              const resText = await res.text();
-              if (resText.trim().startsWith('{')) {
-                const resData = JSON.parse(resText);
+            if (resData && typeof resData === 'object') {
                 if (resData.status === 'success' || resData.authenticated === true) {
                   authenticated = true;
                   matchedUser = resData.username || resData.userData?.user || usernameInput;
                   userFullName = resData.nama || resData.userData?.nama || matchedUser;
                   role = resData.role || resData.userData?.role || "Petugas KU";
+                  const rawAkses = resData.aksesibilitas || (resData.userData && resData.userData.aksesibilitas) || '';
 
-                  if (Array.isArray(resData.tabs) && resData.tabs.length > 0) {
-                    userTabs = resData.tabs;
-                  } else if (resData.aksesibilitas || (resData.userData && resData.userData.aksesibilitas)) {
-                    userTabs = parseAksesString(resData.aksesibilitas || resData.userData.aksesibilitas, role);
+                  // Prioritaskan daftar tab langsung dari sheet "Aksesibilitas"
+                  userTabs = Array.isArray(resData.tabs) ? resData.tabs.filter(t => ['summary','bukukas','input','rekap','info','ibu2'].includes(t)) : parseAksesString(rawAkses);
+                  currentSessionToken = resData.sessionToken || '';
+                  if (!currentSessionToken || userTabs.length === 0) { authenticated = false; throw new Error('Sesi atau hak akses tidak valid.'); }
+
+                  if (typeof resData.canInputIbu2 === 'boolean') {
+                    canInputIbu2 = resData.canInputIbu2;
+                  } else {
+                    canInputIbu2 = canUserInputIbu2(role, rawAkses);
                   }
                 }
               }
-            }
           } catch (fetchErr) {
             console.warn("Spreadsheet authentication request failed or timed out:", fetchErr);
           }
@@ -1558,25 +1933,25 @@
           currentAccountUser = matchedUser;
           currentUserRole = role;
           currentPetugas = userFullName;
-          currentPassword = passwordInput;
           allowedTabs = userTabs;
 
           document.getElementById('frontLoginModal').classList.add('hidden');
           document.getElementById('mainAppHeader').classList.remove('hidden');
           document.getElementById('mainAppWrapper').classList.remove('hidden');
 
-          const badges = ['currentPetugasBadge', 'changePassUsernameBadge'];
+          const badges = ['currentPetugasBadge', 'changePassUsernameBadge', 'ibu2PetugasBadge'];
           badges.forEach(id => {
             const el = document.getElementById(id);
             if (el) el.textContent = currentPetugas;
           });
 
-          const roles = ['summaryRoleName', 'bukuKasRoleName', 'inputRoleName', 'rekapRoleName', 'infoRoleName'];
+          const roles = ['summaryRoleName', 'bukuKasRoleName', 'inputRoleName', 'rekapRoleName', 'infoRoleName', 'ibu2RoleName'];
           roles.forEach(id => {
             const el = document.getElementById(id);
             if (el) el.textContent = `${currentUserRole} (${currentPetugas})`;
           });
 
+          applyIbu2RolePermissions();
           updateSidebarLockIcons();
           const initialTab = allowedTabs.includes('summary') ? 'summary' : allowedTabs[0];
           showToast(`Selamat datang, ${currentPetugas}!`);
@@ -1611,10 +1986,13 @@
     }
 
     function logoutSession() {
+      if (currentSessionToken && USER_SHEETS_URL) {
+        callUserManagementApi({ action: 'logout', sessionToken: currentSessionToken }).catch(() => {});
+      }
+      currentSessionToken = '';
       currentAccountUser = "";
       currentUserRole = "";
       currentPetugas = "Petugas KU";
-      currentPassword = "";
       allowedTabs = ['summary', 'bukukas', 'input', 'rekap', 'info'];
       
       document.getElementById('frontLoginUsername').value = "";
@@ -1629,7 +2007,7 @@
 
     function trySwitchTab(tabName) {
       if (!allowedTabs.includes(tabName)) {
-        showToast(`Akses tab ini dibatasi untuk role ${currentUserRole}!`);
+        showToast("Akses menu ini tidak diberikan pada akun Anda.");
         return;
       }
 
@@ -1640,7 +2018,8 @@
         bukukas: 'bukuKasTabSection',
         input: 'inputTabSection',
         rekap: 'rekapTabSection',
-        info: 'infoTabSection'
+        info: 'infoTabSection',
+        ibu2: 'ibu2TabSection'
       };
 
       const navBtns = {
@@ -1648,7 +2027,8 @@
         bukukas: 'navBukuKasBtn',
         input: 'navInputBtn',
         rekap: 'navRekapBtn',
-        info: 'navInfoBtn'
+        info: 'navInfoBtn',
+        ibu2: 'navIbu2Btn'
       };
 
       Object.keys(sections).forEach(key => {
@@ -1676,7 +2056,11 @@
         backdrop.classList.add('hidden');
       }
 
-      renderDashboard();
+      if (tabName === 'ibu2') {
+        renderIbu2Dashboard();
+      } else {
+        renderDashboard();
+      }
     }
 
     function toggleSidebar() {
@@ -1716,14 +2100,6 @@
       const saveBtn = document.getElementById('saveChangePassBtn');
       const saveBtnText = document.getElementById('saveChangePassBtnText');
 
-      if (oldPass !== currentPassword) {
-        if (errorMsg && errorText) {
-          errorText.textContent = "Password lama yang Anda masukkan salah!";
-          errorMsg.classList.remove('hidden');
-        }
-        return false;
-      }
-
       if (newPass !== confirmPass) {
         if (errorMsg && errorText) {
           errorText.textContent = "Konfirmasi password baru tidak cocok!";
@@ -1740,30 +2116,16 @@
 
         if (USER_SHEETS_URL) {
           try {
-            const updateUrl = `${USER_SHEETS_URL}?action=changePassword&username=${encodeURIComponent(currentAccountUser)}&oldPassword=${encodeURIComponent(oldPass)}&newPassword=${encodeURIComponent(newPass)}`;
-            const res = await fetch(updateUrl, { redirect: 'follow' });
-            if (res.ok) {
-              const resText = await res.text();
-              if (resText.trim().startsWith('{')) {
-                const resJson = JSON.parse(resText);
-                if (resJson.status === 'success') {
-                  updatedInSpreadsheet = true;
-                }
-              }
-            }
+            const resJson = await callUserManagementApi({ action: 'changePassword', username: currentAccountUser, oldPassword: oldPass, newPassword: newPass, sessionToken: currentSessionToken });
+            updatedInSpreadsheet = !!(resJson && resJson.status === 'success');
           } catch (fetchErr) {
             console.warn("Gagal memperbarui password di Google Sheets backend:", fetchErr);
           }
         }
 
-        currentPassword = newPass;
+        if (!updatedInSpreadsheet) throw new Error("Password tidak berhasil diperbarui di server. Sesi mungkin sudah berakhir.");
         closeChangePasswordModal();
-        
-        if (updatedInSpreadsheet) {
-          showToast("Password Anda berhasil diperbarui!");
-        } else {
-          showToast("Password diperbarui untuk sesi aplikasi saat ini!");
-        }
+        showToast("Password Anda berhasil diperbarui!");
       } catch (err) {
         console.error("Error change password:", err);
         showToast("Gagal memperbarui password!");
@@ -1909,7 +2271,7 @@ Catatan:
                   return {
                     id: String(t.id || t.ID || 'tx-' + idx + '-' + Date.now()),
                     date: normalizeDateToDDMMYYYY(rawDate),
-                    type: String(rawType).toLowerCase().trim(),
+                    type: normalizeTxType(rawType),
                     category: String(rawCategory).trim(),
                     description: String(rawDesc).trim(),
                     notes: String(rawNotes).trim(),
@@ -1936,6 +2298,34 @@ Catatan:
                 }).filter(Boolean);
               }
             }
+          }
+        }
+
+        // Ambil Data Khusus Keuangan Ibu-Ibu dari Endpoint Terpisah
+        if (IBU2_SHEETS_URL) {
+          try {
+            const resIbu2 = await fetch(`${IBU2_SHEETS_URL}?t=${Date.now()}`, {
+              redirect: 'follow'
+            });
+            if (resIbu2.ok) {
+              const textIbu2 = await resIbu2.text();
+              if (textIbu2.trim().startsWith('{')) {
+                const dataIbu2 = JSON.parse(textIbu2);
+                if (Array.isArray(dataIbu2.transactions)) {
+                  transactionsIbu2 = dataIbu2.transactions.map((t, idx) => ({
+                    id: String(t.id || t.ID || 'tx-' + (idx + 1)),
+                    date: normalizeDateToDDMMYYYY(t.date || t.Tanggal || ''),
+                    type: normalizeTxType(t.type || t['Jenis Arus Kas'] || 'debet'),
+                    amount: parseNumericAmount(t.amount || t.Nominal || 0),
+                    description: String(t.description || t['Detail Uraian'] || '').trim(),
+                    notes: String(t.notes || t.Keterangan || '').trim(),
+                    createdAt: String(t.createdAt || t['Timestamp Input'] || '')
+                  }));
+                }
+              }
+            }
+          } catch (ibu2Err) {
+            console.warn("Gagal memuat data Keuangan Ibu-Ibu:", ibu2Err);
           }
         }
       } catch (err) {
@@ -2808,6 +3198,7 @@ Catatan:
       if (!tx) return;
 
       pendingDeleteId = id;
+      pendingDeleteScope = 'main';
       const msgEl = document.getElementById('confirmModalMsg');
       if (msgEl) {
         msgEl.textContent = `Apakah Anda yakin ingin menghapus transaksi "${tx.description}" (${formatRupiah(tx.amount)})?`;
@@ -2820,12 +3211,34 @@ Catatan:
       const modal = document.getElementById('confirmModal');
       if (modal) modal.classList.add('hidden');
       pendingDeleteId = null;
+      pendingDeleteScope = 'main';
     }
 
     async function executePendingDelete() {
       if (!pendingDeleteId) return;
       const targetId = pendingDeleteId;
+      const scope = pendingDeleteScope;
       closeConfirmModal();
+
+      if (scope === 'ibu2') {
+        transactionsIbu2 = transactionsIbu2.filter(t => String(t.id) !== String(targetId));
+        renderIbu2Dashboard();
+        showToast("Menghapus transaksi Ibu-Ibu...");
+        try {
+          if (IBU2_SHEETS_URL) {
+            await fetch(IBU2_SHEETS_URL, {
+              method: 'POST',
+              mode: 'cors',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({ action: 'delete', id: targetId })
+            });
+          }
+          showToast("Transaksi Ibu-Ibu berhasil dihapus!");
+        } catch (err) {
+          showToast("Gagal menghapus dari server: " + err.message);
+        }
+        return;
+      }
 
       transactions = transactions.filter(t => String(t.id) !== String(targetId));
       renderDashboard();
@@ -3112,6 +3525,551 @@ Catatan:
       document.body.removeChild(link);
     }
 
+    // ==================== KEUANGAN IBU-IBU LOGIC (DATABASE TERPISAH) ====================
+    function applyIbu2RolePermissions() {
+      const inputBtn = document.getElementById('ibu2SubTabInputBtn');
+      const permBadge = document.getElementById('ibu2PermissionBadge');
+      const actionHeader = document.getElementById('ibu2TableActionHeader');
+
+      if (canInputIbu2) {
+        if (inputBtn) inputBtn.classList.remove('hidden');
+        if (actionHeader) actionHeader.classList.remove('hidden');
+        if (permBadge) {
+          permBadge.textContent = "Tim Keuangan (Akses Penuh: Input & Monitoring)";
+          permBadge.className = "ml-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300";
+        }
+      } else {
+        if (inputBtn) inputBtn.classList.add('hidden');
+        if (actionHeader) actionHeader.classList.add('hidden');
+        if (permBadge) {
+          permBadge.textContent = "Tim Pengawas (Mode Lihat / Monitoring Saja)";
+          permBadge.className = "ml-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300";
+        }
+        if (activeIbu2SubTab === 'input') {
+          switchIbu2SubTab('summary');
+        }
+      }
+    }
+
+    function switchIbu2SubTab(subTab) {
+      if (subTab === 'input' && !canInputIbu2) {
+        showToast("Hanya Tim Keuangan yang dapat menginput transaksi Ibu-Ibu!");
+        return;
+      }
+      activeIbu2SubTab = subTab;
+
+      const views = {
+        summary: 'ibu2SummaryView',
+        history: 'ibu2HistoryView',
+        input: 'ibu2InputView'
+      };
+      const btns = {
+        summary: 'ibu2SubTabSummaryBtn',
+        history: 'ibu2SubTabHistoryBtn',
+        input: 'ibu2SubTabInputBtn'
+      };
+
+      Object.keys(views).forEach(k => {
+        const v = document.getElementById(views[k]);
+        const b = document.getElementById(btns[k]);
+        if (v) {
+          if (k === subTab) v.classList.remove('hidden');
+          else v.classList.add('hidden');
+        }
+        if (b) {
+          if (k === subTab) {
+            b.className = "flex-1 sm:flex-none px-5 py-2.5 rounded-2xl text-xs font-extrabold transition-all bg-pink-500 text-white shadow-sm flex items-center justify-center gap-2";
+          } else {
+            b.className = "flex-1 sm:flex-none px-5 py-2.5 rounded-2xl text-xs font-bold transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center gap-2";
+          }
+        }
+      });
+
+      renderIbu2Dashboard();
+    }
+
+    function renderIbu2Dashboard() {
+      const summaryFiltered = getFilteredIbu2Transactions('summary');
+      let totalDebet = 0;
+      let totalKredit = 0;
+      let countDebet = 0;
+      let countKredit = 0;
+
+      summaryFiltered.forEach(t => {
+        const amt = parseNumericAmount(t.amount);
+        if (t.type === 'debet') {
+          totalDebet += amt;
+          countDebet++;
+        } else {
+          totalKredit += amt;
+          countKredit++;
+        }
+      });
+
+      const netBalance = totalDebet - totalKredit;
+      const balEl = document.getElementById('ibu2BalanceKpi');
+      const incEl = document.getElementById('ibu2IncomeKpi');
+      const expEl = document.getElementById('ibu2ExpenseKpi');
+      const incCntEl = document.getElementById('ibu2IncomeCount');
+      const expCntEl = document.getElementById('ibu2ExpenseCount');
+
+      if (balEl) balEl.textContent = formatRupiah(netBalance);
+      if (incEl) incEl.textContent = formatRupiah(totalDebet);
+      if (expEl) expEl.textContent = formatRupiah(totalKredit);
+      if (incCntEl) incCntEl.textContent = countDebet;
+      if (expCntEl) expCntEl.textContent = countKredit;
+
+      updateIbu2Charts(summaryFiltered);
+      renderIbu2Table();
+      renderRecentIbu2Transactions();
+    }
+
+    function renderRecentIbu2Transactions() {
+      const tbody = document.getElementById('recentIbu2TxTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      if (!transactionsIbu2 || transactionsIbu2.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-6 text-center text-slate-400 dark:text-slate-500 font-medium">
+              Belum ada data transaksi Ibu-Ibu.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      const recentList = [...transactionsIbu2].reverse().slice(0, 5);
+
+      recentList.forEach((t) => {
+        const isDebet = t.type === 'debet';
+        const row = document.createElement('tr');
+        row.className = "hover:bg-slate-100/60 dark:hover:bg-slate-800/50 transition-colors";
+        const safeId = String(t.id).replace(/'/g, "\\'");
+
+        const actionBtns = canInputIbu2 ? `
+          <div class="flex items-center justify-center space-x-1.5">
+            <button type="button" onclick="editIbu2Transaction('${safeId}')" class="px-2 py-1 bg-amber-50 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300 rounded-md font-semibold text-[11px] transition-colors flex items-center gap-1">
+              <i class="fa-solid fa-pen-to-square"></i> Edit
+            </button>
+            <button type="button" onclick="promptDeleteIbu2Transaction('${safeId}')" class="px-2 py-1 bg-rose-50 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300 rounded-md font-semibold text-[11px] transition-colors flex items-center gap-1">
+              <i class="fa-solid fa-trash-can"></i> Hapus
+            </button>
+          </div>
+        ` : `<span class="text-[11px] text-slate-400">-</span>`;
+
+        row.innerHTML = `
+          <td class="py-2.5 px-3 font-mono text-[11px] font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap">
+            ${t.date}
+          </td>
+          <td class="py-2.5 px-3 whitespace-nowrap">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold ${isDebet ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300' : 'bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300'}">
+              ${isDebet ? 'Debet' : 'Kredit'}
+            </span>
+          </td>
+          <td class="py-2.5 px-3 font-semibold text-slate-800 dark:text-slate-100 max-w-[200px] truncate" title="${t.description}">
+            ${t.description}
+          </td>
+          <td class="py-2.5 px-3 text-right font-mono font-bold ${isDebet ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400'} whitespace-nowrap">
+            ${formatRupiah(t.amount)}
+          </td>
+          <td class="py-2.5 px-3 text-center whitespace-nowrap">
+            ${actionBtns}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function getFilteredIbu2Transactions(scope = 'summary') {
+      const startId = scope === 'history' ? 'ibu2HistoryStartDate' : 'ibu2SummaryStartDate';
+      const endId = scope === 'history' ? 'ibu2HistoryEndDate' : 'ibu2SummaryEndDate';
+      const typeId = scope === 'history' ? 'ibu2HistoryType' : 'ibu2SummaryType';
+
+      const startDate = document.getElementById(startId)?.value || '';
+      const endDate = document.getElementById(endId)?.value || '';
+      const typeFilter = document.getElementById(typeId)?.value || 'ALL';
+      const searchEl = document.getElementById('ibu2TableSearch');
+      const query = (scope === 'history' && searchEl) ? searchEl.value.toLowerCase().trim() : '';
+
+      return transactionsIbu2.filter(t => {
+        const itemIsoDate = parseDDMMYYYYtoISO(t.date);
+
+        if (startDate && (!itemIsoDate || itemIsoDate < startDate)) return false;
+        if (endDate && (!itemIsoDate || itemIsoDate > endDate)) return false;
+        if (typeFilter !== 'ALL' && t.type !== typeFilter) return false;
+
+        if (query) {
+          const matchDesc = (t.description || '').toLowerCase().includes(query);
+          const matchNotes = (t.notes || '').toLowerCase().includes(query);
+          if (!matchDesc && !matchNotes) return false;
+        }
+        return true;
+      });
+    }
+
+    function setIbu2MonthFilter(monthKey, scope = 'summary') {
+      const btnClass = scope === 'history' ? '.ibu2-history-month-btn' : '.ibu2-summary-month-btn';
+      const startId = scope === 'history' ? 'ibu2HistoryStartDate' : 'ibu2SummaryStartDate';
+      const endId = scope === 'history' ? 'ibu2HistoryEndDate' : 'ibu2SummaryEndDate';
+
+      document.querySelectorAll(btnClass).forEach(btn => {
+        if (btn.getAttribute('data-month') === monthKey) {
+          btn.className = `${scope === 'history' ? 'ibu2-history-month-btn' : 'ibu2-summary-month-btn'} px-4 py-1.5 text-xs font-extrabold rounded-full bg-pink-500 text-white transition-all shadow-sm`;
+        } else {
+          btn.className = `${scope === 'history' ? 'ibu2-history-month-btn' : 'ibu2-summary-month-btn'} px-4 py-1.5 text-xs font-extrabold rounded-full bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 hover:bg-slate-200 transition-all`;
+        }
+      });
+
+      const startEl = document.getElementById(startId);
+      const endEl = document.getElementById(endId);
+
+      if (monthKey === 'all') {
+        if (startEl) startEl.value = '';
+        if (endEl) endEl.value = '';
+        renderIbu2Dashboard();
+        return;
+      }
+
+      if (monthKey === 'latest') {
+        if (!transactionsIbu2 || transactionsIbu2.length === 0) {
+          if (startEl) startEl.value = '';
+          if (endEl) endEl.value = '';
+          renderIbu2Dashboard();
+          return;
+        }
+        const datesIso = transactionsIbu2.map(t => parseDDMMYYYYtoISO(t.date)).filter(Boolean).sort();
+        if (datesIso.length === 0) {
+          if (startEl) startEl.value = '';
+          if (endEl) endEl.value = '';
+          renderIbu2Dashboard();
+          return;
+        }
+        const latestStr = datesIso[datesIso.length - 1];
+        const [yr, mo] = latestStr.split('-');
+        const lastDayObj = new Date(parseInt(yr, 10), parseInt(mo, 10), 0);
+        const lastDayNum = String(lastDayObj.getDate()).padStart(2, '0');
+
+        if (startEl) startEl.value = `${yr}-${mo}-01`;
+        if (endEl) endEl.value = `${yr}-${mo}-${lastDayNum}`;
+        renderIbu2Dashboard();
+      }
+    }
+
+    function resetIbu2Filters(scope = 'summary') {
+      const typeId = scope === 'history' ? 'ibu2HistoryType' : 'ibu2SummaryType';
+      const typeEl = document.getElementById(typeId);
+      if (typeEl) typeEl.value = 'ALL';
+
+      if (scope === 'history') {
+        const searchEl = document.getElementById('ibu2TableSearch');
+        if (searchEl) searchEl.value = '';
+      }
+
+      setIbu2MonthFilter('all', scope);
+    }
+
+    function updateIbu2Charts(data = transactionsIbu2) {
+      const isDark = document.documentElement.classList.contains('dark');
+      const textColor = isDark ? '#94a3b8' : '#475569';
+      const palette = ['#ec4899', '#8b5cf6', '#14b8a6', '#f59e0b', '#06b6d4', '#10b981', '#6366f1'];
+
+      const incTotals = {};
+      const expTotals = {};
+
+      data.forEach(t => {
+        const amt = parseNumericAmount(t.amount);
+        const labelKey = t.description || 'Lainnya';
+        if (t.type === 'debet') {
+          incTotals[labelKey] = (incTotals[labelKey] || 0) + amt;
+        } else {
+          expTotals[labelKey] = (expTotals[labelKey] || 0) + amt;
+        }
+      });
+
+      const ctxInc = document.getElementById('ibu2IncomeChart');
+      if (ctxInc) {
+        if (ibu2IncomeChartInstance) ibu2IncomeChartInstance.destroy();
+        ibu2IncomeChartInstance = new Chart(ctxInc.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: Object.keys(incTotals),
+            datasets: [{
+              data: Object.values(incTotals),
+              backgroundColor: palette,
+              borderWidth: 2,
+              borderColor: isDark ? '#1E293B' : '#ffffff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'right', labels: { color: textColor, font: { size: 11 }, boxWidth: 12 } },
+              tooltip: { callbacks: { label: (c) => `${c.label || ''}: ${formatRupiah(c.raw || 0)}` } }
+            },
+            cutout: '65%'
+          }
+        });
+      }
+
+      const ctxExp = document.getElementById('ibu2ExpenseChart');
+      if (ctxExp) {
+        if (ibu2ExpenseChartInstance) ibu2ExpenseChartInstance.destroy();
+        ibu2ExpenseChartInstance = new Chart(ctxExp.getContext('2d'), {
+          type: 'doughnut',
+          data: {
+            labels: Object.keys(expTotals),
+            datasets: [{
+              data: Object.values(expTotals),
+              backgroundColor: ['#f43f5e', '#f97316', '#eab308', '#a855f7', '#3b82f6', '#64748b'],
+              borderWidth: 2,
+              borderColor: isDark ? '#1E293B' : '#ffffff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'right', labels: { color: textColor, font: { size: 11 }, boxWidth: 12 } },
+              tooltip: { callbacks: { label: (c) => `${c.label || ''}: ${formatRupiah(c.raw || 0)}` } }
+            },
+            cutout: '65%'
+          }
+        });
+      }
+    }
+
+    function renderIbu2Table() {
+      const tbody = document.getElementById('ibu2TransactionTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const filteredChronological = [...getFilteredIbu2Transactions('history')].sort((a, b) =>
+        parseDDMMYYYYtoISO(a.date).localeCompare(parseDDMMYYYYtoISO(b.date))
+      );
+
+      let runningBal = 0;
+      const balMap = {};
+      filteredChronological.forEach(t => {
+        const amt = parseNumericAmount(t.amount);
+        runningBal += (t.type === 'debet' ? amt : -amt);
+        balMap[t.id] = runningBal;
+      });
+
+      const filtered = [...filteredChronological].reverse();
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="${canInputIbu2 ? 7 : 6}" class="py-8 text-center text-slate-400 font-medium">
+              Tidak ada data transaksi Keuangan Ibu-Ibu yang sesuai filter.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filtered.forEach(t => {
+        const isDebet = t.type === 'debet';
+        const safeId = String(t.id).replace(/'/g, "\\'");
+        const row = document.createElement('tr');
+        row.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors";
+
+        const actionCell = canInputIbu2 ? `
+          <td class="py-3 px-4 text-center whitespace-nowrap">
+            <div class="flex items-center justify-center gap-1.5">
+              <button type="button" onclick="editIbu2Transaction('${safeId}')" class="px-2 py-1 bg-amber-50 text-amber-700 rounded-md font-semibold text-[11px]">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button type="button" onclick="promptDeleteIbu2Transaction('${safeId}')" class="px-2 py-1 bg-rose-50 text-rose-700 rounded-md font-semibold text-[11px]">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        ` : '';
+
+        row.innerHTML = `
+          <td class="py-3 px-4 font-mono text-xs font-semibold whitespace-nowrap text-slate-600 dark:text-slate-300">${t.date}</td>
+          <td class="py-3 px-4">
+            <div class="font-semibold text-slate-800 dark:text-slate-100">${t.description}</div>
+            ${t.createdAt ? `<div class="text-[10px] text-slate-400 mt-0.5">Input: ${t.createdAt}</div>` : ''}
+          </td>
+          <td class="py-3 px-4 text-slate-600 dark:text-slate-300">
+            ${t.notes || '-'}
+          </td>
+          <td class="py-3 px-4 text-right font-mono font-bold text-emerald-600 whitespace-nowrap">${isDebet ? formatRupiah(t.amount) : '-'}</td>
+          <td class="py-3 px-4 text-right font-mono font-bold text-rose-500 whitespace-nowrap">${!isDebet ? formatRupiah(t.amount) : '-'}</td>
+          <td class="py-3 px-4 text-right font-mono font-bold text-slate-700 dark:text-slate-300 whitespace-nowrap">${formatRupiah(balMap[t.id] || 0)}</td>
+          ${actionCell}
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function editIbu2Transaction(id) {
+      if (!canInputIbu2) return;
+      const tx = transactionsIbu2.find(t => String(t.id) === String(id));
+      if (!tx) return;
+
+      editingIbu2TxId = tx.id;
+      document.getElementById('ibu2InputDate').value = parseDDMMYYYYtoISO(tx.date);
+      document.getElementById('ibu2InputType').value = tx.type;
+      document.getElementById('ibu2InputAmount').value = tx.amount;
+      document.getElementById('ibu2InputDescription').value = tx.description;
+      document.getElementById('ibu2InputNotes').value = tx.notes || '';
+
+      const btn = document.getElementById('ibu2SubmitTxBtn');
+      if (btn) {
+        btn.className = "flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-4 px-6 rounded-2xl shadow-sm transition-all flex items-center justify-center space-x-2 text-xs";
+        btn.innerHTML = `<i class="fa-solid fa-pen-to-square"></i><span>Update Transaksi Ibu-Ibu</span>`;
+      }
+
+      switchIbu2SubTab('input');
+    }
+
+    function promptDeleteIbu2Transaction(id) {
+      if (!canInputIbu2) return;
+      const tx = transactionsIbu2.find(t => String(t.id) === String(id));
+      if (!tx) return;
+
+      pendingDeleteId = id;
+      pendingDeleteScope = 'ibu2';
+      const msgEl = document.getElementById('confirmModalMsg');
+      if (msgEl) {
+        msgEl.textContent = `Apakah Anda yakin ingin menghapus transaksi Ibu-Ibu "${tx.description}" (${formatRupiah(tx.amount)})?`;
+      }
+      document.getElementById('confirmModal').classList.remove('hidden');
+    }
+
+    function resetIbu2Form() {
+      const form = document.getElementById('ibu2TransactionForm');
+      if (form) form.reset();
+      editingIbu2TxId = null;
+      const todayStr = new Date().toISOString().split('T')[0];
+      const dEl = document.getElementById('ibu2InputDate');
+      if (dEl) dEl.value = todayStr;
+
+      const btn = document.getElementById('ibu2SubmitTxBtn');
+      if (btn) {
+        btn.disabled = false;
+        btn.className = "flex-1 bg-pink-600 hover:bg-pink-700 text-white font-extrabold py-4 px-6 rounded-2xl shadow-sm active:scale-[0.98] transition-all flex items-center justify-center space-x-2 text-xs";
+        btn.innerHTML = `<i class="fa-solid fa-floppy-disk"></i><span>Simpan Transaksi Ibu-Ibu</span>`;
+      }
+    }
+
+    async function handleIbu2TransactionSubmit(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      if (!canInputIbu2) {
+        showToast("Anda tidak memiliki izin untuk menginput transaksi Ibu-Ibu.");
+        return false;
+      }
+
+      const rawDate = document.getElementById('ibu2InputDate').value;
+      const type = document.getElementById('ibu2InputType').value;
+      const amount = parseNumericAmount(document.getElementById('ibu2InputAmount').value);
+      const description = document.getElementById('ibu2InputDescription').value.trim();
+      const rawNotes = document.getElementById('ibu2InputNotes').value.trim();
+
+      if (!rawDate || !type || !amount || !description) {
+        showToast("Mohon lengkapi semua field wajib!");
+        return false;
+      }
+
+      const formattedDate = parseISOtoDDMMYYYY(rawDate);
+      const nowStr = new Date().toLocaleString('id-ID');
+      const normalizedType = normalizeTxType(type);
+      const sheetTypeLabel = normalizedType === 'debet' ? 'pemasukan' : 'pengeluaran';
+
+      const submitBtn = document.getElementById('ibu2SubmitTxBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Menyimpan...</span>`;
+
+      try {
+        if (editingIbu2TxId) {
+          const idx = transactionsIbu2.findIndex(t => String(t.id) === String(editingIbu2TxId));
+          if (idx !== -1) {
+            const updatedTx = {
+              ...transactionsIbu2[idx],
+              date: formattedDate,
+              type: normalizedType,
+              amount,
+              description,
+              notes: rawNotes
+            };
+            transactionsIbu2[idx] = updatedTx;
+
+            if (IBU2_SHEETS_URL) {
+              await fetch(IBU2_SHEETS_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                  action: 'update',
+                  transaction: { ...updatedTx, type: sheetTypeLabel }
+                })
+              });
+            }
+            showToast("Transaksi Ibu-Ibu berhasil diperbarui!");
+          }
+        } else {
+          const newTx = {
+            id: 'ibu2-' + Date.now(),
+            date: formattedDate,
+            type: normalizedType,
+            amount,
+            description,
+            notes: rawNotes,
+            createdAt: nowStr
+          };
+
+          if (IBU2_SHEETS_URL) {
+            await fetch(IBU2_SHEETS_URL, {
+              method: 'POST',
+              mode: 'cors',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({
+                action: 'add',
+                transaction: { ...newTx, type: sheetTypeLabel }
+              })
+            });
+          }
+
+          transactionsIbu2.push(newTx);
+          showToast("Transaksi Ibu-Ibu berhasil disimpan ke spreadsheet Ibu-Ibu!");
+        }
+      } catch (err) {
+        showToast("Gagal menyimpan: " + err.message);
+      } finally {
+        resetIbu2Form();
+        switchIbu2SubTab('history');
+      }
+      return false;
+    }
+
+    function exportIbu2ToCSV() {
+      const dataToExport = getFilteredIbu2Transactions('history');
+      if (dataToExport.length === 0) {
+        showToast("Tidak ada data Keuangan Ibu-Ibu untuk diexport!");
+        return;
+      }
+      let csv = "ID,Tanggal,Jenis Arus Kas,Detail Uraian,Keterangan,Debet (Rp),Kredit (Rp),Timestamp Input\n";
+      dataToExport.forEach(t => {
+        const amt = parseNumericAmount(t.amount);
+        const debet = t.type === 'debet' ? amt : 0;
+        const kredit = t.type === 'kredit' ? amt : 0;
+        csv += `${t.id},${t.date},${t.type},"${(t.description || '').replace(/"/g, '""')}","${(t.notes || '').replace(/"/g, '""')}",${debet},${kredit},"${t.createdAt || ''}"\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `Laporan_Kas_Ibu2_SKB1_${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
     function renderDashboard() {
       if (isLoading) return;
 
@@ -3244,6 +4202,8 @@ Catatan:
       const todayStr = new Date().toISOString().split('T')[0];
       const inputDateEl = document.getElementById('inputDate');
       if (inputDateEl) inputDateEl.value = todayStr;
+      const ibu2DateEl = document.getElementById('ibu2InputDate');
+      if (ibu2DateEl) ibu2DateEl.value = todayStr;
 
       renderCheckboxesForCategories('summary');
       renderCheckboxesForCategories('bk');

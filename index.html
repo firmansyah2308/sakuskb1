@@ -1321,6 +1321,7 @@
                   <tr class="bg-slate-50 dark:bg-[#0F172A] text-slate-400 dark:text-slate-400 text-[11px] font-black uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
                     <th class="py-4 px-4">TGL</th>
                     <th class="py-4 px-4">URAIAN / DETAIL</th>
+                    <th class="py-4 px-4">PETUGAS INPUT</th>
                     <th class="py-4 px-4">KETERANGAN</th>
                     <th class="py-4 px-4 text-right">DEBET (MASUK)</th>
                     <th class="py-4 px-4 text-right">KREDIT (KELUAR)</th>
@@ -1622,6 +1623,22 @@
     const USER_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxFWquCku8RTLpoQmgsfiHt6BTkN1zcXWEg5JWYaTbUSRcON8u1fP7bF5YhuD6ZtAmUsA/exec";
     const TRANSACTION_SHEETS_URL = "https://script.google.com/macros/s/AKfycbw8HI-xt8XDkmsjNd_Cr_rxe7Yd3Rt2ofGtV_jdYW3pwpfeAoTS6Z_SDftf7wiHaRrv/exec";
     const IBU2_SHEETS_URL = "https://script.google.com/macros/s/AKfycbzJ3Wv4qsKCESCaBxVT1uZmI-GJslV-cpi4rlm8ik-Fj1fl7xuQcQJiYvTpijMLz8K7/exec";
+
+    async function callIbu2Api(payload) {
+      if (!IBU2_SHEETS_URL) throw new Error("URL backend Keuangan Ibu-Ibu belum dikonfigurasi.");
+      const response = await fetch(IBU2_SHEETS_URL, {
+        method: 'POST',
+        mode: 'cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error("Server Keuangan Ibu-Ibu tidak dapat dihubungi.");
+      const result = await response.json();
+      if (!result || result.status !== 'success') {
+        throw new Error(result?.message || "Penyimpanan transaksi gagal.");
+      }
+      return result;
+    }
 
     // Kirim kredensial melalui POST body agar tidak terekspos di query URL.
     async function callUserManagementApi(payload) {
@@ -2319,7 +2336,8 @@ Catatan:
                     amount: parseNumericAmount(t.amount || t.Nominal || 0),
                     description: String(t.description || t['Detail Uraian'] || '').trim(),
                     notes: String(t.notes || t.Keterangan || '').trim(),
-                    createdAt: String(t.createdAt || t['Timestamp Input'] || '')
+                    createdAt: String(t.createdAt || t['Timestamp Input'] || ''),
+                    petugasInput: String(t.petugasInput || t['Petugas Input'] || '').trim()
                   }));
                 }
               }
@@ -3226,12 +3244,7 @@ Catatan:
         showToast("Menghapus transaksi Ibu-Ibu...");
         try {
           if (IBU2_SHEETS_URL) {
-            await fetch(IBU2_SHEETS_URL, {
-              method: 'POST',
-              mode: 'cors',
-              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-              body: JSON.stringify({ action: 'delete', id: targetId })
-            });
+            await callIbu2Api({ action: 'delete', id: targetId });
           }
           showToast("Transaksi Ibu-Ibu berhasil dihapus!");
         } catch (err) {
@@ -3893,8 +3906,10 @@ Catatan:
         row.innerHTML = `
           <td class="py-3 px-4 font-mono text-xs font-semibold whitespace-nowrap text-slate-600 dark:text-slate-300">${t.date}</td>
           <td class="py-3 px-4">
-            <div class="font-semibold text-slate-800 dark:text-slate-100">${t.description}</div>
-            ${t.createdAt ? `<div class="text-[10px] text-slate-400 mt-0.5">Input: ${t.createdAt}</div>` : ''}
+            <div class="font-semibold text-slate-800 dark:text-slate-100">${t.description || '-'}</div>
+          </td>
+          <td class="py-3 px-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
+            ${t.petugasInput || '-'}
           </td>
           <td class="py-3 px-4 text-slate-600 dark:text-slate-300">
             ${t.notes || '-'}
@@ -3981,38 +3996,36 @@ Catatan:
       const nowStr = new Date().toLocaleString('id-ID');
       const normalizedType = normalizeTxType(type);
       const sheetTypeLabel = normalizedType === 'debet' ? 'pemasukan' : 'pengeluaran';
-
+      const isEditing = Boolean(editingIbu2TxId);
       const submitBtn = document.getElementById('ibu2SubmitTxBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Menyimpan...</span>`;
+      const originalButtonHtml = submitBtn ? submitBtn.innerHTML : '';
+      const originalButtonClass = submitBtn ? submitBtn.className : '';
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Menyimpan...</span>`;
+      }
 
       try {
-        if (editingIbu2TxId) {
+        if (isEditing) {
           const idx = transactionsIbu2.findIndex(t => String(t.id) === String(editingIbu2TxId));
-          if (idx !== -1) {
-            const updatedTx = {
-              ...transactionsIbu2[idx],
-              date: formattedDate,
-              type: normalizedType,
-              amount,
-              description,
-              notes: rawNotes
-            };
-            transactionsIbu2[idx] = updatedTx;
+          if (idx === -1) throw new Error("Transaksi yang akan diperbarui tidak ditemukan.");
 
-            if (IBU2_SHEETS_URL) {
-              await fetch(IBU2_SHEETS_URL, {
-                method: 'POST',
-                mode: 'cors',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({
-                  action: 'update',
-                  transaction: { ...updatedTx, type: sheetTypeLabel }
-                })
-              });
-            }
-            showToast("Transaksi Ibu-Ibu berhasil diperbarui!");
+          const updatedTx = {
+            ...transactionsIbu2[idx],
+            date: formattedDate,
+            type: normalizedType,
+            amount,
+            description,
+            notes: rawNotes,
+            petugasInput: transactionsIbu2[idx].petugasInput || currentPetugas || currentAccountUser || ''
+          };
+
+          if (IBU2_SHEETS_URL) {
+            await callIbu2Api({ action: 'update', transaction: { ...updatedTx, type: sheetTypeLabel } });
           }
+          transactionsIbu2[idx] = updatedTx;
+          showToast("Transaksi Ibu-Ibu berhasil diperbarui! Form siap untuk transaksi berikutnya.");
         } else {
           const newTx = {
             id: 'ibu2-' + Date.now(),
@@ -4021,29 +4034,34 @@ Catatan:
             amount,
             description,
             notes: rawNotes,
-            createdAt: nowStr
+            createdAt: nowStr,
+            petugasInput: currentPetugas || currentAccountUser || ''
           };
 
           if (IBU2_SHEETS_URL) {
-            await fetch(IBU2_SHEETS_URL, {
-              method: 'POST',
-              mode: 'cors',
-              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-              body: JSON.stringify({
-                action: 'add',
-                transaction: { ...newTx, type: sheetTypeLabel }
-              })
-            });
+            await callIbu2Api({ action: 'add', transaction: { ...newTx, type: sheetTypeLabel } });
           }
 
           transactionsIbu2.push(newTx);
-          showToast("Transaksi Ibu-Ibu berhasil disimpan ke spreadsheet Ibu-Ibu!");
+          showToast("Transaksi Ibu-Ibu berhasil disimpan! Silakan lanjut input transaksi berikutnya.");
         }
+
+        // Setelah berhasil, kosongkan form tetapi tetap berada di halaman Input Transaksi.
+        resetIbu2Form();
+        renderIbu2Dashboard();
       } catch (err) {
         showToast("Gagal menyimpan: " + err.message);
-      } finally {
-        resetIbu2Form();
-        switchIbu2SubTab('history');
+        // Pertahankan isi form agar user dapat memperbaiki atau mencoba menyimpan kembali.
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          if (isEditing) {
+            submitBtn.className = "flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-4 px-6 rounded-2xl shadow-sm transition-all flex items-center justify-center space-x-2 text-xs";
+            submitBtn.innerHTML = `<i class="fa-solid fa-pen-to-square"></i><span>Update Transaksi Ibu-Ibu</span>`;
+          } else {
+            submitBtn.className = originalButtonClass;
+            submitBtn.innerHTML = originalButtonHtml || `<i class="fa-solid fa-floppy-disk"></i><span>Simpan Transaksi Ibu-Ibu</span>`;
+          }
+        }
       }
       return false;
     }
@@ -4054,12 +4072,12 @@ Catatan:
         showToast("Tidak ada data Keuangan Ibu-Ibu untuk diexport!");
         return;
       }
-      let csv = "ID,Tanggal,Jenis Arus Kas,Detail Uraian,Keterangan,Debet (Rp),Kredit (Rp),Timestamp Input\n";
+      let csv = "ID,Tanggal,Jenis Arus Kas,Nominal,Detail Uraian,Keterangan,Timestamp Input,Petugas Input\n";
       dataToExport.forEach(t => {
         const amt = parseNumericAmount(t.amount);
         const debet = t.type === 'debet' ? amt : 0;
         const kredit = t.type === 'kredit' ? amt : 0;
-        csv += `${t.id},${t.date},${t.type},"${(t.description || '').replace(/"/g, '""')}","${(t.notes || '').replace(/"/g, '""')}",${debet},${kredit},"${t.createdAt || ''}"\n`;
+        csv += `${t.id},${t.date},${t.type},${amt},"${(t.description || '').replace(/"/g, '""')}","${(t.notes || '').replace(/"/g, '""')}","${t.createdAt || ''}","${(t.petugasInput || '').replace(/"/g, '""')}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');

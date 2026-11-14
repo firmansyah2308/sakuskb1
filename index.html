@@ -117,11 +117,11 @@
       </div>
 
       <div class="space-y-2">
-        <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">SAKU SKB1</h2>
+        <h2 class="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Kelompok SKB 1</h2>
         <div class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-bold bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300 border border-teal-200/60 uppercase tracking-wider">
           Sistem Keuangan & Kas
         </div>
-        <p class="text-xs text-slate-500 dark:text-slate-400 pt-1 leading-relaxed">Selamat datang di SAKU (Sistem Aplikasi Keuangan) terpadu kelompok. Masukkan Username & Password Anda untuk mengakses</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 pt-1 leading-relaxed">Selamat datang di aplikasi keuangan terpadu kelompok. Masukkan Username & Password Anda untuk mengakses</p>
       </div>
 
       <form onsubmit="handleFrontLogin(event)" class="space-y-4 text-left">
@@ -178,11 +178,11 @@
           <div class="min-w-0">
             <div class="flex items-center gap-2">
               <h1 class="font-black text-base sm:text-lg lg:text-xl leading-tight text-slate-900 dark:text-white truncate tracking-tight">
-                SAKU SKB1
+                Kelompok Srengseng Kalibata 1
               </h1>
             </div>
             <p class="text-xs text-slate-500 dark:text-slate-400 font-medium truncate flex items-center gap-1.5 pt-0.5">
-              Sistem Aplikasi Keuangan Terpadu Kelompok
+              Sistem Pencatatan Transaksi Keuangan
             </p>
           </div>
         </div>
@@ -296,8 +296,8 @@
       </div>
 
       <div class="p-5 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400 dark:text-slate-500 bg-slate-50/50 dark:bg-slate-900/30">
-        <p class="font-bold text-slate-700 dark:text-slate-300">SAKU SKB1 v7.3</p>
-        <p class="text-[10px] text-slate-400 pt-0.5">Sistem Aplikasi Keuangan</p>
+        <p class="font-bold text-slate-700 dark:text-slate-300">KasKita SKB 1 v3.5</p>
+        <p class="text-[10px] text-slate-400 pt-0.5">Playful Fintech Theme</p>
       </div>
 
     </aside>
@@ -1321,7 +1321,6 @@
                   <tr class="bg-slate-50 dark:bg-[#0F172A] text-slate-400 dark:text-slate-400 text-[11px] font-black uppercase tracking-wider border-b border-slate-100 dark:border-slate-800">
                     <th class="py-4 px-4">TGL</th>
                     <th class="py-4 px-4">URAIAN / DETAIL</th>
-                    <th class="py-4 px-4">PETUGAS INPUT</th>
                     <th class="py-4 px-4">KETERANGAN</th>
                     <th class="py-4 px-4 text-right">DEBET (MASUK)</th>
                     <th class="py-4 px-4 text-right">KREDIT (KELUAR)</th>
@@ -1623,33 +1622,6 @@
     const USER_SHEETS_URL = "https://script.google.com/macros/s/AKfycbxFWquCku8RTLpoQmgsfiHt6BTkN1zcXWEg5JWYaTbUSRcON8u1fP7bF5YhuD6ZtAmUsA/exec";
     const TRANSACTION_SHEETS_URL = "https://script.google.com/macros/s/AKfycbw8HI-xt8XDkmsjNd_Cr_rxe7Yd3Rt2ofGtV_jdYW3pwpfeAoTS6Z_SDftf7wiHaRrv/exec";
     const IBU2_SHEETS_URL = "https://script.google.com/macros/s/AKfycbzJ3Wv4qsKCESCaBxVT1uZmI-GJslV-cpi4rlm8ik-Fj1fl7xuQcQJiYvTpijMLz8K7/exec";
-
-    async function callIbu2Api(payload) {
-      if (!IBU2_SHEETS_URL) throw new Error("URL backend Keuangan Ibu-Ibu belum dikonfigurasi.");
-      const response = await fetch(IBU2_SHEETS_URL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      });
-      if (!response.ok) throw new Error("Server Keuangan Ibu-Ibu tidak dapat dihubungi.");
-      const result = await response.json();
-      if (!result || result.status !== 'success') {
-        throw new Error(result?.message || "Penyimpanan transaksi gagal.");
-      }
-      return result;
-    }
-
-    // Kirim kredensial melalui POST body agar tidak terekspos di query URL.
-    async function callUserManagementApi(payload) {
-      const response = await fetch(USER_SHEETS_URL, {
-        method: 'POST', redirect: 'follow',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(payload)
-      });
-      if (!response.ok) throw new Error('Server manajemen user tidak dapat dihubungi.');
-      return await response.json();
-    }
     // GLOBAL APPLICATION STATE & CONSTANTS
     const ALL_CATEGORIES = [
       "KH FR", "KH Shod Daerah", "KH Shod Desa", "KH Shod Kelompok", "KH Infaq",
@@ -1664,6 +1636,16 @@
       "Pinjaman/Piutang", "Ukhro", "Lain-lain"
     ];
 
+    // ID transaksi Setoran KU yang sumber dananya berasal dari kas internal kelompok.
+    // Hanya transaksi ini yang mengurangi Saldo Kas Kelompok. Setoran KU dari dana luar
+    // kelompok tidak boleh mengurangi saldo kas kelompok.
+    // Jika ada transaksi Setoran KU baru yang dibiayai kas internal, tambahkan ID-nya di sini.
+    const SETORAN_KU_INTERNAL_TX_IDS = new Set([
+      "tx-1791012135581", // Fotocopy Dalil Desa - Rp65.000
+      "tx-1794028996672", // Fotocopy Dalil Desa - Rp65.000
+      "tx-1794029046242"  // Tanah Sabil RAWAJATI - Rp750.000
+    ]);
+
     const JAMAHA_CATEGORIES = [
       "KH FR", "KH Shod Daerah", "KH Shod Desa", "KH Shod Kelompok", "KH Infaq",
       "Tabungan Kurban"
@@ -1677,7 +1659,7 @@
     let currentAccountUser = "";
     let currentUserRole = "Petugas KU";
     let currentPetugas = "Arif F";
-    let currentSessionToken = "";
+    let currentPassword = "";
     let allowedTabs = ['summary', 'bukukas', 'input', 'rekap', 'info'];
     let canInputIbu2 = false;
 
@@ -1807,21 +1789,26 @@
       }
     }
 
-    function parseAksesString(aksesStr) {
-      const raw = String(aksesStr || '').trim().toLowerCase();
-      if (!raw) return [];
-      if (/(^|[,;])\s*(semua|full access|full)\s*(?=[,;]|$)/i.test(raw)) return ['summary','bukukas','input','rekap','info','ibu2'];
-      const tabs = [];
-      raw.split(/[,;\n]+/).map(x => x.trim()).filter(Boolean).forEach(item => {
-        let tab = null;
-        if (/ringkasan|analisis|summary/.test(item)) tab = 'summary';
-        else if (/rincian|buku\s*kas|bukukas/.test(item)) tab = 'bukukas';
-        else if (/input/.test(item)) tab = 'input';
-        else if (/rekap/.test(item)) tab = 'rekap';
-        else if (/informasi|\binfo\b/.test(item)) tab = 'info';
-        else if (/keuangan\s*ibu|ibu-ibu|ibu\s*ibu/.test(item)) tab = 'ibu2';
-        if (tab && !tabs.includes(tab)) tabs.push(tab);
-      });
+    function parseAksesString(aksesStr, roleStr) {
+      const inputStr = String(aksesStr || '').trim().toLowerCase();
+      const role = String(roleStr || '').trim().toLowerCase();
+
+      const isPetugasKU = role.includes('petugas ku') || role === 'ku' || role.includes('keuangan') || role.includes('bendahara') || role.includes('admin');
+      const isTimPengawas = role.includes('pengawas') || inputStr.includes('pengawas') || inputStr.includes('ibu');
+
+      let tabs = [];
+      if (!aksesStr || inputStr.includes('semua') || inputStr.includes('full') || isPetugasKU) {
+        tabs = ['summary', 'bukukas', 'input', 'rekap', 'info', 'ibu2'];
+      } else {
+        if (inputStr.includes('ringkasan') || inputStr.includes('analisis') || inputStr.includes('summary')) tabs.push('summary');
+        if (inputStr.includes('rincian') || inputStr.includes('buku kas') || inputStr.includes('bukukas')) tabs.push('bukukas');
+        if (inputStr.includes('input')) tabs.push('input');
+        if (inputStr.includes('rekap')) tabs.push('rekap');
+        if (inputStr.includes('informasi') || inputStr.includes('info')) tabs.push('info');
+        if (inputStr.includes('ibu') || isTimPengawas) tabs.push('ibu2');
+        if (tabs.length === 0) tabs = ['summary', 'bukukas', 'input', 'rekap', 'info'];
+      }
+
       return tabs;
     }
 
@@ -1915,12 +1902,18 @@
           try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 8000);
-            const resData = await Promise.race([
-              callUserManagementApi({ action: 'login', username: usernameInput, password: passwordInput, appName: 'KASKU' }),
-              new Promise((_, reject) => setTimeout(() => reject(new Error('Waktu verifikasi habis.')), 8000))
-            ]);
+            const loginApiUrl = `${USER_SHEETS_URL}?action=login&username=${encodeURIComponent(usernameInput)}&user=${encodeURIComponent(usernameInput)}&password=${encodeURIComponent(passwordInput)}`;
+
+            const res = await fetch(loginApiUrl, {
+              signal: controller.signal,
+              redirect: 'follow'
+            });
             clearTimeout(timeoutId);
-            if (resData && typeof resData === 'object') {
+
+            if (res.ok) {
+              const resText = await res.text();
+              if (resText.trim().startsWith('{')) {
+                const resData = JSON.parse(resText);
                 if (resData.status === 'success' || resData.authenticated === true) {
                   authenticated = true;
                   matchedUser = resData.username || resData.userData?.user || usernameInput;
@@ -1929,9 +1922,11 @@
                   const rawAkses = resData.aksesibilitas || (resData.userData && resData.userData.aksesibilitas) || '';
 
                   // Prioritaskan daftar tab langsung dari sheet "Aksesibilitas"
-                  userTabs = Array.isArray(resData.tabs) ? resData.tabs.filter(t => ['summary','bukukas','input','rekap','info','ibu2'].includes(t)) : parseAksesString(rawAkses);
-                  currentSessionToken = resData.sessionToken || '';
-                  if (!currentSessionToken || userTabs.length === 0) { authenticated = false; throw new Error('Sesi atau hak akses tidak valid.'); }
+                  if (Array.isArray(resData.tabs) && resData.tabs.length > 0) {
+                    userTabs = resData.tabs;
+                  } else {
+                    userTabs = parseAksesString(rawAkses, role);
+                  }
 
                   if (typeof resData.canInputIbu2 === 'boolean') {
                     canInputIbu2 = resData.canInputIbu2;
@@ -1940,6 +1935,7 @@
                   }
                 }
               }
+            }
           } catch (fetchErr) {
             console.warn("Spreadsheet authentication request failed or timed out:", fetchErr);
           }
@@ -1950,6 +1946,7 @@
           currentAccountUser = matchedUser;
           currentUserRole = role;
           currentPetugas = userFullName;
+          currentPassword = passwordInput;
           allowedTabs = userTabs;
 
           document.getElementById('frontLoginModal').classList.add('hidden');
@@ -2003,13 +2000,10 @@
     }
 
     function logoutSession() {
-      if (currentSessionToken && USER_SHEETS_URL) {
-        callUserManagementApi({ action: 'logout', sessionToken: currentSessionToken }).catch(() => {});
-      }
-      currentSessionToken = '';
       currentAccountUser = "";
       currentUserRole = "";
       currentPetugas = "Petugas KU";
+      currentPassword = "";
       allowedTabs = ['summary', 'bukukas', 'input', 'rekap', 'info'];
       
       document.getElementById('frontLoginUsername').value = "";
@@ -2024,7 +2018,7 @@
 
     function trySwitchTab(tabName) {
       if (!allowedTabs.includes(tabName)) {
-        showToast("Akses menu ini tidak diberikan pada akun Anda.");
+        showToast(`Akses tab ini dibatasi untuk role ${currentUserRole}!`);
         return;
       }
 
@@ -2117,6 +2111,14 @@
       const saveBtn = document.getElementById('saveChangePassBtn');
       const saveBtnText = document.getElementById('saveChangePassBtnText');
 
+      if (oldPass !== currentPassword) {
+        if (errorMsg && errorText) {
+          errorText.textContent = "Password lama yang Anda masukkan salah!";
+          errorMsg.classList.remove('hidden');
+        }
+        return false;
+      }
+
       if (newPass !== confirmPass) {
         if (errorMsg && errorText) {
           errorText.textContent = "Konfirmasi password baru tidak cocok!";
@@ -2133,16 +2135,30 @@
 
         if (USER_SHEETS_URL) {
           try {
-            const resJson = await callUserManagementApi({ action: 'changePassword', username: currentAccountUser, oldPassword: oldPass, newPassword: newPass, sessionToken: currentSessionToken });
-            updatedInSpreadsheet = !!(resJson && resJson.status === 'success');
+            const updateUrl = `${USER_SHEETS_URL}?action=changePassword&username=${encodeURIComponent(currentAccountUser)}&oldPassword=${encodeURIComponent(oldPass)}&newPassword=${encodeURIComponent(newPass)}`;
+            const res = await fetch(updateUrl, { redirect: 'follow' });
+            if (res.ok) {
+              const resText = await res.text();
+              if (resText.trim().startsWith('{')) {
+                const resJson = JSON.parse(resText);
+                if (resJson.status === 'success') {
+                  updatedInSpreadsheet = true;
+                }
+              }
+            }
           } catch (fetchErr) {
             console.warn("Gagal memperbarui password di Google Sheets backend:", fetchErr);
           }
         }
 
-        if (!updatedInSpreadsheet) throw new Error("Password tidak berhasil diperbarui di server. Sesi mungkin sudah berakhir.");
+        currentPassword = newPass;
         closeChangePasswordModal();
-        showToast("Password Anda berhasil diperbarui!");
+        
+        if (updatedInSpreadsheet) {
+          showToast("Password Anda berhasil diperbarui!");
+        } else {
+          showToast("Password diperbarui untuk sesi aplikasi saat ini!");
+        }
       } catch (err) {
         console.error("Error change password:", err);
         showToast("Gagal memperbarui password!");
@@ -2336,8 +2352,7 @@ Catatan:
                     amount: parseNumericAmount(t.amount || t.Nominal || 0),
                     description: String(t.description || t['Detail Uraian'] || '').trim(),
                     notes: String(t.notes || t.Keterangan || '').trim(),
-                    createdAt: String(t.createdAt || t['Timestamp Input'] || ''),
-                    petugasInput: String(t.petugasInput || t['Petugas Input'] || '').trim()
+                    createdAt: String(t.createdAt || t['Timestamp Input'] || '')
                   }));
                 }
               }
@@ -3244,7 +3259,12 @@ Catatan:
         showToast("Menghapus transaksi Ibu-Ibu...");
         try {
           if (IBU2_SHEETS_URL) {
-            await callIbu2Api({ action: 'delete', id: targetId });
+            await fetch(IBU2_SHEETS_URL, {
+              method: 'POST',
+              mode: 'cors',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({ action: 'delete', id: targetId })
+            });
           }
           showToast("Transaksi Ibu-Ibu berhasil dihapus!");
         } catch (err) {
@@ -3906,10 +3926,8 @@ Catatan:
         row.innerHTML = `
           <td class="py-3 px-4 font-mono text-xs font-semibold whitespace-nowrap text-slate-600 dark:text-slate-300">${t.date}</td>
           <td class="py-3 px-4">
-            <div class="font-semibold text-slate-800 dark:text-slate-100">${t.description || '-'}</div>
-          </td>
-          <td class="py-3 px-4 text-slate-600 dark:text-slate-300 whitespace-nowrap">
-            ${t.petugasInput || '-'}
+            <div class="font-semibold text-slate-800 dark:text-slate-100">${t.description}</div>
+            ${t.createdAt ? `<div class="text-[10px] text-slate-400 mt-0.5">Input: ${t.createdAt}</div>` : ''}
           </td>
           <td class="py-3 px-4 text-slate-600 dark:text-slate-300">
             ${t.notes || '-'}
@@ -3996,36 +4014,38 @@ Catatan:
       const nowStr = new Date().toLocaleString('id-ID');
       const normalizedType = normalizeTxType(type);
       const sheetTypeLabel = normalizedType === 'debet' ? 'pemasukan' : 'pengeluaran';
-      const isEditing = Boolean(editingIbu2TxId);
-      const submitBtn = document.getElementById('ibu2SubmitTxBtn');
-      const originalButtonHtml = submitBtn ? submitBtn.innerHTML : '';
-      const originalButtonClass = submitBtn ? submitBtn.className : '';
 
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Menyimpan...</span>`;
-      }
+      const submitBtn = document.getElementById('ibu2SubmitTxBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> <span>Menyimpan...</span>`;
 
       try {
-        if (isEditing) {
+        if (editingIbu2TxId) {
           const idx = transactionsIbu2.findIndex(t => String(t.id) === String(editingIbu2TxId));
-          if (idx === -1) throw new Error("Transaksi yang akan diperbarui tidak ditemukan.");
+          if (idx !== -1) {
+            const updatedTx = {
+              ...transactionsIbu2[idx],
+              date: formattedDate,
+              type: normalizedType,
+              amount,
+              description,
+              notes: rawNotes
+            };
+            transactionsIbu2[idx] = updatedTx;
 
-          const updatedTx = {
-            ...transactionsIbu2[idx],
-            date: formattedDate,
-            type: normalizedType,
-            amount,
-            description,
-            notes: rawNotes,
-            petugasInput: transactionsIbu2[idx].petugasInput || currentPetugas || currentAccountUser || ''
-          };
-
-          if (IBU2_SHEETS_URL) {
-            await callIbu2Api({ action: 'update', transaction: { ...updatedTx, type: sheetTypeLabel } });
+            if (IBU2_SHEETS_URL) {
+              await fetch(IBU2_SHEETS_URL, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                  action: 'update',
+                  transaction: { ...updatedTx, type: sheetTypeLabel }
+                })
+              });
+            }
+            showToast("Transaksi Ibu-Ibu berhasil diperbarui!");
           }
-          transactionsIbu2[idx] = updatedTx;
-          showToast("Transaksi Ibu-Ibu berhasil diperbarui! Form siap untuk transaksi berikutnya.");
         } else {
           const newTx = {
             id: 'ibu2-' + Date.now(),
@@ -4034,34 +4054,29 @@ Catatan:
             amount,
             description,
             notes: rawNotes,
-            createdAt: nowStr,
-            petugasInput: currentPetugas || currentAccountUser || ''
+            createdAt: nowStr
           };
 
           if (IBU2_SHEETS_URL) {
-            await callIbu2Api({ action: 'add', transaction: { ...newTx, type: sheetTypeLabel } });
+            await fetch(IBU2_SHEETS_URL, {
+              method: 'POST',
+              mode: 'cors',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify({
+                action: 'add',
+                transaction: { ...newTx, type: sheetTypeLabel }
+              })
+            });
           }
 
           transactionsIbu2.push(newTx);
-          showToast("Transaksi Ibu-Ibu berhasil disimpan! Silakan lanjut input transaksi berikutnya.");
+          showToast("Transaksi Ibu-Ibu berhasil disimpan ke spreadsheet Ibu-Ibu!");
         }
-
-        // Setelah berhasil, kosongkan form tetapi tetap berada di halaman Input Transaksi.
-        resetIbu2Form();
-        renderIbu2Dashboard();
       } catch (err) {
         showToast("Gagal menyimpan: " + err.message);
-        // Pertahankan isi form agar user dapat memperbaiki atau mencoba menyimpan kembali.
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          if (isEditing) {
-            submitBtn.className = "flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-4 px-6 rounded-2xl shadow-sm transition-all flex items-center justify-center space-x-2 text-xs";
-            submitBtn.innerHTML = `<i class="fa-solid fa-pen-to-square"></i><span>Update Transaksi Ibu-Ibu</span>`;
-          } else {
-            submitBtn.className = originalButtonClass;
-            submitBtn.innerHTML = originalButtonHtml || `<i class="fa-solid fa-floppy-disk"></i><span>Simpan Transaksi Ibu-Ibu</span>`;
-          }
-        }
+      } finally {
+        resetIbu2Form();
+        switchIbu2SubTab('history');
       }
       return false;
     }
@@ -4072,12 +4087,12 @@ Catatan:
         showToast("Tidak ada data Keuangan Ibu-Ibu untuk diexport!");
         return;
       }
-      let csv = "ID,Tanggal,Jenis Arus Kas,Nominal,Detail Uraian,Keterangan,Timestamp Input,Petugas Input\n";
+      let csv = "ID,Tanggal,Jenis Arus Kas,Detail Uraian,Keterangan,Debet (Rp),Kredit (Rp),Timestamp Input\n";
       dataToExport.forEach(t => {
         const amt = parseNumericAmount(t.amount);
         const debet = t.type === 'debet' ? amt : 0;
         const kredit = t.type === 'kredit' ? amt : 0;
-        csv += `${t.id},${t.date},${t.type},${amt},"${(t.description || '').replace(/"/g, '""')}","${(t.notes || '').replace(/"/g, '""')}","${t.createdAt || ''}","${(t.petugasInput || '').replace(/"/g, '""')}"\n`;
+        csv += `${t.id},${t.date},${t.type},"${(t.description || '').replace(/"/g, '""')}","${(t.notes || '').replace(/"/g, '""')}",${debet},${kredit},"${t.createdAt || ''}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
@@ -4095,20 +4110,32 @@ Catatan:
       let overallKredit = 0;
       let kelompokDebet = 0;
       let kelompokKredit = 0;
+      let setoranKuDariKasInternal = 0;
 
       transactions.forEach(t => {
         const amt = parseNumericAmount(t.amount);
-        if (t.type === 'debet') {
+        const category = String(t.category || '').trim();
+        const type = String(t.type || '').trim().toLowerCase();
+        const transactionId = String(t.id || '').trim();
+
+        // Saldo akumulatif mencakup seluruh transaksi tanpa pengecualian kategori.
+        if (type === 'debet') {
           overallDebet += amt;
-          if (KELOMPOK_CATEGORIES.includes(t.category)) kelompokDebet += amt;
-        } else {
+          if (KELOMPOK_CATEGORIES.includes(category)) kelompokDebet += amt;
+        } else if (type === 'kredit') {
           overallKredit += amt;
-          if (KELOMPOK_CATEGORIES.includes(t.category)) kelompokKredit += amt;
+          if (KELOMPOK_CATEGORIES.includes(category)) kelompokKredit += amt;
+
+          // Setoran KU internal adalah kas kelompok yang dipindahkan ke KU.
+          // Setoran dari sumber eksternal tidak masuk pengurang ini.
+          if (category === 'Setoran KU' && SETORAN_KU_INTERNAL_TX_IDS.has(transactionId)) {
+            setoranKuDariKasInternal += amt;
+          }
         }
       });
 
       const overallNet = overallDebet - overallKredit;
-      const kelompokNet = kelompokDebet - kelompokKredit;
+      const kelompokNet = kelompokDebet - kelompokKredit - setoranKuDariKasInternal;
 
       const overallBalanceEl = document.getElementById('overallBalance');
       if (overallBalanceEl) overallBalanceEl.textContent = formatRupiah(overallNet);
